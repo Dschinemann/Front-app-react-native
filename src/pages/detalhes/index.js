@@ -20,31 +20,33 @@ export default function Detalhes() {
                 'Aviso',
                 `${response.data}`,
                 [
-                   { text: 'OK', onPress: () => {} }
+                    { text: 'OK', onPress: () => { } }
                 ]
-    
+
             )
         } catch (error) {
-           
+
         }
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.alert}>
-                <Text style={styles.alertProperty}>ID Alert:</Text>
-                <Text style={styles.alertValue}>{alert.id}</Text>
 
-                <Text style={styles.alertProperty}>Titulo:</Text>
-                <Text style={styles.alertValue}>{alert.titulo}</Text>
+                <Text style={styles.alertProperty}>Titulo:  <Text style={styles.alertValue}>
+                    {alert.titulo}</Text>
+                </Text>
+                <Text style={styles.alertProperty}>Descrição:  <Text style={styles.alertValue}>
+                    {alert.descricao}</Text>
+                </Text>
+                <Text style={styles.alertProperty}>Valor:  <Text style={styles.alertValue}>
+                    {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
+                </Text>                
+                <Text style={styles.alertProperty}>Local:  <Text style={styles.alertValue}>
+                    {alert.local}</Text>
+                </Text>
 
-                <Text style={styles.alertProperty}>Valor:</Text>
-                <Text style={styles.alertValue}>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
-
-                <Text style={styles.alertProperty}>Local:</Text>
-                <Text style={styles.alertValue}>{alert.local}</Text>
-
-                <TouchableOpacity onPress={insc}>
+                <TouchableOpacity style={{marginTop:15}} onPress={insc}>
                     <Text style={styles.alertProperty}>Inscreva-se</Text>
                 </TouchableOpacity>
             </View>

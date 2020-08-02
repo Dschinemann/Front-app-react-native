@@ -52,8 +52,6 @@ export default function Alertas() {
             <View style={styles.header}>
                 <Text style={styles.headerTextBold}>Temos um Total de {total}  Alertas para seu perfil</Text>
             </View>
-
-            <Text style={styles.title}>Bem Vindo</Text>
             <Text style={styles.description}>Quais as oportunidades para hoje?</Text>
 
             <SafeAreaView style={styles.safeArea}>
@@ -66,16 +64,17 @@ export default function Alertas() {
                         onEndReachedThreshold={0.2}
                         renderItem={({ item: alert }) => (
                             <View style={styles.alert}>
-                                <Text style={styles.alertProperty}>ID Alert:</Text>
-                                <Text style={styles.alertValue}>{alert.id}</Text>
-
-                                <Text style={styles.alertProperty}>Titulo:</Text>
-                                <Text style={styles.alertValue}>{alert.titulo}</Text>
-
-                                <Text style={styles.alertProperty}>Valor:</Text>
-                                <Text style={styles.alertValue}>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
-
-                                <TouchableOpacity onPress={() => irParaDetalhes(alert)}>
+                               
+                                <Text style={styles.alertProperty}>Código:   <Text style={styles.alertValue}>
+                                    {alert.id}</Text>
+                                </Text>
+                                <Text style={styles.alertProperty}>Titulo:     <Text style={styles.alertValue}>
+                                    {alert.titulo}</Text>
+                                </Text>
+                                <Text style={styles.alertProperty}>Valor:      <Text style={styles.alertValue}>
+                                {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
+                                </Text>                                
+                                <TouchableOpacity style={{marginTop:10}} onPress={() => irParaDetalhes(alert)}>
                                     <Text style={styles.alertProperty}>Detalhes desse Alerta</Text>
                                 </TouchableOpacity>
                             </View>

@@ -6,7 +6,7 @@ export default StyleSheet.create({
         flex: 1,
         paddingHorizontal:24,
         paddingTop:25,
-        backgroundColor:"#FFDEAD"
+        backgroundColor:"#FFFFE0"
         
     },
     header:{
@@ -32,7 +32,8 @@ export default StyleSheet.create({
         fontSize:16,
         lineHeight:24,
         color:'#737380',
-        paddingBottom:10
+        paddingBottom:10,
+        marginTop:25,
 
     },
     alert:{
@@ -42,15 +43,15 @@ export default StyleSheet.create({
         marginBottom:16
     },
     alertProperty:{
-       fontSize:14,
+       fontSize:18,
        color:'#414d',
-       fontWeight:"bold" 
+       fontWeight:"bold",
     },
     alertValue:{
         marginTop:8,
         fontSize:15,
         marginBottom:24,
-        color:"#737380"
+        color:"#737380",       
     },
     detailsbutton:{
         flexDirection:"row",
@@ -64,6 +65,7 @@ export default StyleSheet.create({
     },
     safeArea:{
         flex: 1,
+        marginTop:20
     },
     inputs:{
         borderColor:"gray",

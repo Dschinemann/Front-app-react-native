@@ -7,7 +7,7 @@ export default StyleSheet.create({
         flex: 1,
         paddingHorizontal:24,
         paddingTop:50,
-        backgroundColor:"#FFDEAD"
+        backgroundColor:"#FFFFE0"
     },
     header:{
         flexDirection:"row",
@@ -44,15 +44,15 @@ export default StyleSheet.create({
         marginBottom:16
     },
     alertProperty:{
-       fontSize:14,
-       color:'#414d',
-       fontWeight:"bold" 
-    },
-    alertValue:{
+        fontSize:18,
+        color:'#414d',
+        fontWeight:"bold",
+     },
+     alertValue:{
         marginTop:8,
         fontSize:15,
         marginBottom:24,
-        color:"#737380"
+        color:"#737380",       
     },
     detailsbutton:{
         flexDirection:"row",

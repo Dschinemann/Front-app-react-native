@@ -35,7 +35,7 @@ export default function Inscritos() {
     
     
     function voltar() {
-        navigation.goBack()
+        navigation.navigate('Meus Alertas')
     }
 
     function openWhats(telefone) {

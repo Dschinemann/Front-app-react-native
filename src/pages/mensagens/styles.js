@@ -6,15 +6,7 @@ export default StyleSheet.create({
         flex: 1,
         paddingHorizontal:24,
         paddingTop:25,
-        backgroundColor:"#4169E1"        
-    },
-    textInput:{        
-        position: 'absolute',
-        left: 5,
-        right: 5,
-        bottom: 5,
-        backgroundColor: 'white',
-        borderRadius:5,
+        backgroundColor:"#FFFFE0"      
     },
     msg:{
         flex:1,
@@ -26,7 +18,7 @@ export default StyleSheet.create({
     text:{
         fontSize:15,
         fontWeight:"bold",
-        color:'white',
+        color:'#414d',
         padding:20,
     },
     nome:{

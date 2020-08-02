@@ -6,7 +6,7 @@ export default StyleSheet.create({
         flex: 1,
         paddingHorizontal:24,
         paddingTop:50,
-        backgroundColor:"#FFDEAD"
+        backgroundColor:"#FFFFE0"
     },
     alertContainer:{
         alignSelf:"center",

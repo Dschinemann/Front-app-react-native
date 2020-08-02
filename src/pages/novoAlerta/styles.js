@@ -3,58 +3,57 @@ import {StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     container:{
-        flex: 1,       
-        alignItems: "center",
-        padding:10,
-        backgroundColor:"#FFDEAD"
+        flex: 1,        
+        backgroundColor:"#FFFFE0"
     },
     inputs:{
-        borderColor:"gray",
-        borderWidth:1,
-        height:40,
-        width:300,
-        borderRadius:10
-                
-    }, 
-    cadastro:{
-        padding:10
+        backgroundColor:'white',
+        borderBottomWidth:3,
+        borderLeftWidth:4,
+        borderColor:'gray',
+        color:'black',
+        fontSize:20,
+        fontWeight:"bold"
     },
-
-    containerButton:{
-        width:200,
-        
-    },
-    containerInputs:{
+    header:{
+        color:'#414d',
+        fontWeight:"bold",
+        fontSize:20,
+        alignSelf:'center',
         padding:10
         
     },
-    containerAlerta:{
+    multiselect:{
+        marginTop:5,
+        paddingTop:5,
+        borderBottomWidth:3,
+        borderLeftWidth:4,
+        borderColor:'gray',
+    },
+    local:{
+        color:'#363636',
+        fontWeight:"bold",
+        fontSize:20,       
+        alignSelf:'center',
+        marginTop:20,
+    },
+    viewLocal:{
         flex:1,
+        flexDirection:"row",
+        justifyContent:'space-around',
         alignItems:"center",
-        borderColor:"gray",
-        borderWidth:2,
-        marginBottom:250,
-        padding:10,
+        borderBottomWidth:3,
+        borderColor:'gray'            
+    },
+    button:{
+        color:'white',
+        fontSize:30,
+        fontWeight:'bold',        
+        backgroundColor:'#4F4F4F',
         borderRadius:10,
-        backgroundColor:'white'  
+        width:200,
+        height:50,      
+        textAlign:"center",
+        marginTop:20,                 
     },
-    containerEndereço:{
-        flex:1,
-        alignItems:"center",
-        borderColor:"gray",
-        borderWidth:2,
-        padding:10,
-        borderRadius:10       
-        
-    },
-    textArea:{
-        minHeight:150,
-        height:"auto",
-        borderColor:"gray",
-        borderWidth:1,
-        width:300,
-        borderRadius:10
-       
-    }
-
 })

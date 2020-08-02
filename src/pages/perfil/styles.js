@@ -6,43 +6,42 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        backgroundColor:"#6495ED"
+        backgroundColor:"#FFFFE0"
 
     },
     containerText: {
         flex: 1,
         justifyContent: "center",        
     },
-    text: {
-        borderRadius: 10,
-        borderWidth: 2,
-        backgroundColor:"#0000FF",
+    text: {                
         fontSize:20,
         fontWeight:"bold",
-        color:'white',
+        color:'#414d',
         height:'auto',
         margin:10,
         padding:10,
-        textAlign:"center",
-        borderBottomColor:'white',
-        borderColor:'white'
+        textAlign:"justify",        
+        borderLeftWidth:3,
+        borderBottomWidth:3,
+        borderRadius:5,
+        borderColor:'#1C1C1C'
     },
     textHeader:{
         fontSize:30,
         fontWeight:"bold",
-        color:'white',
+        color:'#414d',
         padding:15           
     },
     containerAvatar:{      
         flexDirection:"row",
         alignSelf:'flex-start',
-        paddingLeft:25,
+        paddingLeft:5,
                  
     },
     textAvatar:{
-        color:'white',
+        color:'#414d',
         fontWeight:"bold",
-        paddingLeft:15,
+        paddingLeft:10,
         fontSize:20,                  
     },
 })

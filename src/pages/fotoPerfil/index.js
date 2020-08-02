@@ -93,7 +93,7 @@ export default function FotoPerfil() {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.textHeader}>Seja bem Vindo</Text>
+               
                 <View style={styles.containerAvatar}>
                     <TouchableOpacity onPress={() => ImagePicker.showImagePicker(options, imagePickerCallBack)}>
                         <Avatar

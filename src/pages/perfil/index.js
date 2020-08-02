@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { Avatar, Rating } from 'react-native-elements'
-import { useNavigation, useIsFocused } from '@react-navigation/native'
+import { useNavigation} from '@react-navigation/native'
+import AuthContext, { } from '../../context/auth'
 import api from '../../services/api'
 import styles from './styles'
 
 
 
 export default function Perfil() {
+    const {user} = useContext(AuthContext)
     const navigate = useNavigation()
-    const [rating, setrating] = useState(0)
-    const [userName, setUserName] = useState('')
+    const [rating, setrating] = useState(0)    
     const [image, setImage] = useState(null)
     const [ocupacao, setOcupacao] = useState('%')
 
@@ -19,9 +20,7 @@ export default function Perfil() {
     
     
     useEffect(()=>{
-        const reload =navigate.addListener('focus',()=>{
-            userConfig()
-            MinhaFoto()
+        const reload =navigate.addListener('focus',()=>{                        
             profissao()
             nota()
         })
@@ -29,27 +28,19 @@ export default function Perfil() {
     },[])
     
     function newAlert() {
-        navigate.navigate('novoAlerta')
+        navigate.navigate('NovoAlerta')
     }
     function minhaFoto() {
-        navigate.navigate('minhaFoto')
+        navigate.navigate('fotoPerfil')
     }
 
     function TodosAlertas(ocupacao) {
         navigate.navigate('todosAlertas',{ocupacao})
     }
     function NavegarMeuasAlertas() {
-        navigate.navigate('meusAlertas')
+        navigate.navigate('MeusAlertas')
     }
-    async function userConfig() {
-        const userconfig = await AsyncStorage.getItem('@user_user_name')
-        const fotoPerfil = await AsyncStorage.getItem('@fotoPerfil')       
-        setUserName(userconfig)
-        setImage(fotoPerfil)
 
-
-    }
-    
     async function irParaMinhasInscricoes() {
         navigate.navigate('minhasInsc')
     }
@@ -58,11 +49,11 @@ export default function Perfil() {
         const response = await api.get('/user/minhaFoto')
         setImage(response.data)
     }
-
+    
     async function nota(){
-        const user_id = await AsyncStorage.getItem('@user_user_id')
+
         try {
-            const media =  await api.post(`/user/rating?user_id=${user_id}`)
+            const media =  await api.post(`/user/rating?user_id=${user.id}`)
             setrating(media.data)
            
         } catch (error) {
@@ -75,7 +66,7 @@ export default function Perfil() {
         setOcupacao(habilidade)
         
     }
-
+    
 
     return (
         <View style={styles.container}>
@@ -93,18 +84,18 @@ export default function Perfil() {
                     />
                 </TouchableOpacity>
                 <View style={{justifyContent:"center"}}>
-                <Text style={styles.textAvatar}>{userName}</Text>
+                <Text style={styles.textAvatar}>{user.name}</Text>
                 </View>
             </View>
 
-            <View style={styles.containerRating}>
+            <View>
                 <Rating             
                     reviews={false}
                     imageSize={40}
                     ratingCount={5}
                     readonly={true}                                        
-                    startingValue={rating}                    
-                    tintColor={"#6495ED"}
+                    startingValue={rating}                                     
+                    tintColor={"#FFFFE0"}
                 />
             </View>
             <View style={styles.containerText}>
@@ -121,9 +112,9 @@ export default function Perfil() {
                     <Text style={styles.text}>Criar Alerta</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate.navigate('ocupacao')}>
-                    <Text style={styles.text}>Selecione sua habilidade</Text>
+                    <Text style={styles.text}>Selecione sua Profissão</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate.navigate('mensagens')}>
+                <TouchableOpacity onPress={() => navigate.navigate('Mensagens')}>
                     <Text style={styles.text}>Mensagens</Text>
                 </TouchableOpacity>
 

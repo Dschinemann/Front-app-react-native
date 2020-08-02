@@ -21,7 +21,6 @@ export default function Alertas() {
             params: { page }
         })
       
-        console.log(response.data)
         setAlertas([...alertas, ...response.data])
         setTotal(response.headers['x-total-count'])
         setPage(page + 1)
@@ -39,7 +38,7 @@ export default function Alertas() {
 
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.headerTextBold}>Você se inscreveu para {total} Alertas</Text>
+                <Text style={styles.headerTextBold}>Você se inscreveu para {total} Alerta (s)</Text>
             </View>
            
             <SafeAreaView style={styles.safeArea}>
@@ -52,15 +51,17 @@ export default function Alertas() {
                         onEndReachedThreshold={0.2}
                         renderItem={({ item: alert }) => (
                             <View style={styles.alert}>
-                                <Text style={styles.alertProperty}>ID Alert:</Text>
-                                <Text style={styles.alertValue}>{alert.id}</Text>
+                                <Text style={styles.alertProperty}>Código:   <Text style={styles.alertValue}>
+                                    {alert.id}</Text>
+                                </Text>
 
-                                <Text style={styles.alertProperty}>Titulo:</Text>
-                                <Text style={styles.alertValue}>{alert.titulo}</Text>
+                                <Text style={styles.alertProperty}>Titulo:     <Text style={styles.alertValue}>
+                                    {alert.titulo}</Text>
+                                </Text>
 
-                                <Text style={styles.alertProperty}>Valor:</Text>
-                                <Text style={styles.alertValue}>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
-                                
+                                <Text style={styles.alertProperty}>Valor:      <Text style={styles.alertValue}>
+                                {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
+                                </Text>   
                                 <TouchableOpacity onPress={() => irParaDetalhes(alert)}>
                                     <Text style={styles.alertProperty}>Detalhes desse Alerta</Text>
                                 </TouchableOpacity>

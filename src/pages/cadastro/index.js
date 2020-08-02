@@ -11,7 +11,7 @@ import styles from './styles'
 
 
 
-export default function Login() {
+export default function CreateUser() {
 
   const navigation = useNavigation()
 

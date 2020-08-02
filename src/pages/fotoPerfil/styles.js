@@ -7,7 +7,7 @@ export default StyleSheet.create({
         flex: 1,       
         alignItems: "center",
         padding:15,
-        backgroundColor:"#FFDEAD"
+        backgroundColor:"#FFFFE0"
     },
     containerAvatar:{
         flex:1,
@@ -17,13 +17,15 @@ export default StyleSheet.create({
     },
     textAvatar:{
         fontSize:25,
-        padding:15     
+        padding:15,       
+        color:'#414d',
+        fontWeight:"bold",   
     },
-    textHeader:{
-        fontSize:20,        
-    },
+
     textInfom:{
-        fontSize:11
+        fontSize:11,
+        color:'#414d',
+        fontWeight:"bold",
     }
 
         

@@ -98,7 +98,7 @@ export default function Alertas() {
                         renderItem={({ item: alert }) => (
                             <View style={styles.alert}>
                                 <View style={{ flex: 1, flexDirection: "row" }}>
-                                    <Text style={styles.idAlert}>ID Alert:</Text>
+                                    <Text style={styles.idAlert}>Código:</Text>
                                     <Text style={styles.alertValue}>{alert.id}</Text>
 
                                     <Text style={styles.idAlert}>Status</Text>

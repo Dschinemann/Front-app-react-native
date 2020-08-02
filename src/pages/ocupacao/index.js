@@ -92,12 +92,12 @@ export default class Ocupacao extends Component {
                     {this.multiSelect && this.multiSelect.getSelectedItemsExt(selectedItems)}
                 </View>
                 <View style={{ flex: 1, alignItems: "center" }}>
-                    <Text style={{ marginRight: 10, marginLeft: 10 }}>Agora que você escolheu sua profissão, clique em enviar para finalizar seu cadastro!</Text>
+                    <Text style={{ marginRight: 10, marginLeft: 10,color:'#414d', }}>Agora que você escolheu sua profissão, clique em enviar para finalizar seu cadastro!</Text>
                     <TouchableOpacity onPress={() => this.enviarOcupacao(selectedItems)}>
-                        <Text style={{ fontWeight: "bold", fontSize: 20, padding: 10 }}>Enviar</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 20, padding: 10,color:'#414d', }}>Enviar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.atualizarOcup(selectedItems)}>
-                        <Text style={{ fontWeight: "bold", fontSize: 20, padding: 10 }}>Atualizar</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 20, padding: 10,color:'#414d', }}>Atualizar</Text>
                     </TouchableOpacity>
                 </View>
             </View>
