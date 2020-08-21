@@ -6,11 +6,12 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor:"#FFFFE0"
+        backgroundColor:"#FFFFE0",
+        padding:10
         
     },
     inputs:{
-        borderColor:"gray",
+        borderColor:"black",
         borderWidth:1,
         height:40,
         width:300,
@@ -28,6 +29,7 @@ export default StyleSheet.create({
     containerButton:{
         alignItems:"center",
         padding:5,
+        borderRadius:10
     },
     containerInputs:{
         padding:5
@@ -38,7 +40,10 @@ export default StyleSheet.create({
     },
     label: {
         margin: 8,
-        right:60,  
+        right:60,
+        color:'#414d',
+        fontSize:15,
+        fontWeight:"bold"
         
     },
     checkboxContainer: {
@@ -53,6 +58,23 @@ export default StyleSheet.create({
     containerCalendar:{
         padding:10
     },
+    titulos:{
+        color:'#414d',
+        fontSize:15,
+        fontWeight:"bold"
+    },
+    title:{
+        color:'#414d',
+        fontSize:30,
+        fontWeight:"bold",
+        paddingLeft:5,
+        alignSelf:"center",             
+    },
+    create:{     
+        alignSelf:"center",        
+        borderBottomWidth:2,
+            
+    }
 
 })
 

@@ -10,10 +10,12 @@ export default StyleSheet.create({
         backgroundColor:'white',
         borderBottomWidth:3,
         borderLeftWidth:4,
-        borderColor:'gray',
+        borderColor:'black',
         color:'black',
         fontSize:20,
-        fontWeight:"bold"
+        fontWeight:"bold",
+        padding:10,
+        borderRadius:5
     },
     header:{
         color:'#414d',
@@ -28,14 +30,17 @@ export default StyleSheet.create({
         paddingTop:5,
         borderBottomWidth:3,
         borderLeftWidth:4,
-        borderColor:'gray',
+        borderColor:'black',
+        borderRadius:5
+        
     },
     local:{
-        color:'#363636',
+        color:'#414d',
         fontWeight:"bold",
         fontSize:20,       
         alignSelf:'center',
         marginTop:20,
+        
     },
     viewLocal:{
         flex:1,
@@ -43,17 +48,21 @@ export default StyleSheet.create({
         justifyContent:'space-around',
         alignItems:"center",
         borderBottomWidth:3,
-        borderColor:'gray'            
+        borderColor:'black',
+                
     },
     button:{
         color:'white',
         fontSize:30,
         fontWeight:'bold',        
-        backgroundColor:'#4F4F4F',
+        backgroundColor:'#414d',
         borderRadius:10,
         width:200,
         height:50,      
         textAlign:"center",
         marginTop:20,                 
     },
+    inputContainer:{
+        padding:8
+    }
 })

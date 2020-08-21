@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Linking, Alert } from 'react-native'
 import styles from './styles'
 import { Avatar, Rating } from 'react-native-elements'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import CheckBox from '@react-native-community/checkbox'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import AsyncStorage from '@react-native-community/async-storage'
 import api from '../../services/api'
+import AuthContext from '../../context/auth'
 
 
 
@@ -15,27 +15,25 @@ export default function Inscritos() {
     const [inscs, setInscs] = useState([])
     const [total, setTotal] = useState(0)
     const [checkboxes, setChecked] = useState([])
-    const [userId, setUserId] = useState()   
     const [page, setPage] = useState(1)
     const route = useRoute()
     const alert = route.params.alert
     const navigation = useNavigation()
+    const { user } = useContext(AuthContext);
     
     
 
     async function loadIncs() {
-        const response = await api.get(`/alert/${alert.id}/allAlerts/myinsc?page=${page}`)       
+        const response = await api.get(`/alert/${alert.id}/allAlerts/myinsc?page=${page}`)             
         setInscs([...inscs,...response.data])
         setTotal(response.headers['x-total-count'])
         setPage(page + 1)
-        const usuario = await AsyncStorage.getItem('@user_user_id')
-        setUserId(usuario)
     }
 
     
     
     function voltar() {
-        navigation.navigate('Meus Alertas')
+        navigation.goBack()
     }
 
     function openWhats(telefone) {
@@ -95,7 +93,10 @@ export default function Inscritos() {
                 user_id_insc:inscs[i].user_id
             })
             const mensagem = await api.post('/conversation',{
-                user_id_selecao:inscs[i].user_id
+                user_id_selecao:inscs[i].user_id,
+                receiver_name:inscs[i].name,
+                nome:user.name,
+                url:inscs[i].url
             })
         } catch (error) {
            

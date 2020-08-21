@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, SafeAreaView, FlatList, Alert, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView, FlatList, Alert, TextInput,ActivityIndicator } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { AirbnbRating } from 'react-native-ratings'
 import styles from './styles'
@@ -11,22 +11,22 @@ export default function Feedback() {
     const route = useRoute()
     const navigate = useNavigation()
     const [page, setPage] = useState(1)
-    const alert = route.params.alert
-    const [rating, setRating] = useState(0)
+    const alert = route.params.alert       
     const [inscritos, setInscritos] = useState([])
     const [total, setTotal] = useState(0)
     const [nota, setNota] = useState(0)
     const [feedback, setFeedBack] = useState('')
+    const [loading, setLoading]=useState(false)
 
     async function loadInscritos() {
 
         try {
             const response = await Api.get(`/alert/${alert.id}/allAlerts/myinsc?page=${page}&status=${true}&avaliado=${'NAO'}`)
-
-            setInscritos(response.data)
+            
+            setInscritos([...inscritos,...response.data])
             setPage(page + 1)
             setTotal(response.headers['x-total-count'])
-            
+
 
         } catch (error) {
             Alert.alert('Erro, tente novamente')
@@ -34,6 +34,7 @@ export default function Feedback() {
     }
 
     async function enviarFeedBack(insc, index) {
+        setLoading(true)
         try {
 
             const response = await Api.post(`/user/alert/feedback?alert_id=${insc.alert_id}`, {
@@ -43,9 +44,9 @@ export default function Feedback() {
                 avaliado: 'SIM'
             })
 
-
+            setLoading(false)
         } catch (error) {
-            
+
             Alert.alert('Tente novamente!')
         }
         inscritos.splice(index, 1)
@@ -53,20 +54,20 @@ export default function Feedback() {
 
     }
     async function finalizar(alert) {
-        
+        setLoading(true)
         try {
             await Api.put(`/alert/${alert.id}/allAlerts/insc`)
-            navigate.navigate('meusAlertas')
-
+            navigate.navigate('MeusAlertas')
+            setLoading(false)
         } catch (error) {
-            
+
         }
 
     }
 
 
     function finalizarAlerta(alert) {
-        
+
         Alert.alert(
             'Aviso',
             'Finalizando o alerta você não podera mais atualiza-lo e também não podera avaliar os profissionais que executaram sua tarefa, se não avaliou todos eles, cancele a operaçao e classifique-os, seu feedback é importante!',
@@ -90,12 +91,16 @@ export default function Feedback() {
 
     return (
         <View style={styles.container}>
+                <View>
+                    <ActivityIndicator animating={loading} size="large" color="#999" />
+                </View>
             <View style={styles.alertContainer}>
-                <Text style={styles.alertProperty}>ID Alert:</Text>
-                <Text style={styles.alertValue}>{alert.id}</Text>
-
-                <Text style={styles.alertProperty}>Titulo:</Text>
-                <Text style={styles.alertValue}>{alert.titulo}</Text>
+                <Text style={styles.alertProperty}>Código:   <Text style={styles.alertValue}>
+                    {alert.id}</Text>
+                </Text>
+                <Text style={styles.alertProperty}>Titulo:     <Text style={styles.alertValue}>
+                    {alert.titulo}</Text>
+                </Text>
             </View>
             <View style={{ alignSelf: 'flex-end' }}>
                 <TouchableOpacity onPress={() => finalizarAlerta(alert)} style={{ padding: 15, paddingRight: 15 }}>
@@ -109,6 +114,8 @@ export default function Feedback() {
                             data={inscritos}
                             keyExtractor={insc => String(insc.id)}
                             showsVerticalScrollIndicator={false}
+                            onEndReached={loadInscritos}
+                            onEndReachedThreshold={0.2}
                             renderItem={({ item: insc, index }) => (
                                 <View style={styles.alert}>
                                     <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>

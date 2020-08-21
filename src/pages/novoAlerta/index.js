@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { View, Text, TextInput, ScrollView, KeyboardAvoidingView, Button, Alert, SafeAreaView } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { View, Text, TextInput, ScrollView, KeyboardAvoidingView, Alert, SafeAreaView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import MultiSelect from 'react-native-multiple-select'
 import styles from './styles'
 import api from '../../services/api'
-import AsyncStorage from '@react-native-community/async-storage'
+import AuthContext from '../../context/auth'
 import { TouchableOpacity } from 'react-native'
 
 
@@ -12,6 +12,7 @@ import { TouchableOpacity } from 'react-native'
 
 export default function NovoAlerta() {
     const navigation = useNavigation()
+    const { user } = useContext(AuthContext);
     const [titulo, settitulo] = useState('')
     const [descricao, setdescricao] = useState('')
     const [valor, setValor] = useState('')
@@ -24,7 +25,7 @@ export default function NovoAlerta() {
 
 
     async function createAlert() {
-        const user_id = await AsyncStorage.getItem('@user_user_id')
+
         
         if(titulo.length == 0){
             return Alert.alert(' Campo Titulo não pode ser vazio!')
@@ -44,7 +45,7 @@ export default function NovoAlerta() {
 
 
         try {
-            const response = await api.post(`/users/${user_id}/novoAlerta`, {
+            const response = await api.post(`/users/${user.id}/novoAlerta`, {
                 titulo,
                 descricao,
                 valor,
@@ -97,7 +98,10 @@ export default function NovoAlerta() {
         })
             .then(response => response.json())
             .then(response => setlocal(response))
-            .catch((error) => Alert.alert('Houve um erro na solicitação de endereço'))     
+            .catch((error) => {
+                Alert.alert('Houve um erro na solicitação de endereço')
+                console.log(error)
+            })     
         }
             
     function formatNumber(val){

@@ -2,35 +2,13 @@ import {StyleSheet } from 'react-native'
 
 
 export default StyleSheet.create({
-    container:{
-        flex: 1,
-        paddingHorizontal:24,
-        paddingTop:25,
-        backgroundColor:"white",          
-    },
-    nome:{
-        fontSize:20,
-        fontWeight:"bold"
-    },
-    msgText:{
-        fontSize:20,
-        fontWeight:"bold",        
-    },
     header:{
-        padding:10
-    },
-    msgTextSender:{
-        alignSelf:'flex-end',
-        fontSize:20,
+        padding:10,
         fontWeight:"bold",
-        paddingLeft:5,
-        color:'white'
+        fontSize:20,
+        alignSelf:"center",
+        color:'#414d'
     },
-    senderMessage:{
-        backgroundColor:'blue',
-        borderRadius:5,
-        alignSelf:"flex-end",
-        padding:5,        
-    }
+
 
 })

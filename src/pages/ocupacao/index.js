@@ -31,20 +31,36 @@ export default class Ocupacao extends Component {
     };
 
     async enviarOcupacao(selectedItems){
-        const respose = await api.post('/ocupacao/create',{
+        const response = await api.post('/ocupacao/create',{
             codigo:selectedItems
         })
-        Alert.alert(respose.data)
-        this.props.navigation.navigate('perfil')
+       
+        Alert.alert(
+            `${response.data}`,
+            `\n Voltar para Perfil?`,
+            [
+                { text:'Cancelar',onPress:() =>{} },
+                { text: 'ok', onPress: () => {this.props.navigation.navigate('perfil')}}
+            ]
+
+        )
+        
     }
     async atualizarOcup(selectedItems){
         const response = await api.put('/ocupacao/userUpdate',{
             codigo:selectedItems
         })
         this.storeData(selectedItems)
-        Alert.alert(response.data)
-        this.props.navigation.navigate('perfil')
-        
+        Alert.alert(
+            `${response.data}`,
+            `\n Voltar para Perfil?`,
+            [
+                { text:'Cancelar',onPress:() =>{} },
+                { text: 'ok', onPress: () => {this.props.navigation.navigate('perfil')}}
+            ]
+
+        )
+       
     }
 
     storeData = async (selectedItems) => {

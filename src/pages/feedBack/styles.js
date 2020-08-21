@@ -9,13 +9,7 @@ export default StyleSheet.create({
         backgroundColor:"#FFFFE0"
     },
     alertContainer:{
-        alignSelf:"center",
-        backgroundColor:"#FFDEAD",
-        flexDirection:"row",
-        paddingLeft:10,
-        paddingRight:10,
-        borderRadius:5,
-        height:30, 
+        
     },
     alertProperty:{        
         fontSize:20,

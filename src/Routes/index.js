@@ -3,7 +3,7 @@ import AuthContext from '../context/auth'
 import { View,ActivityIndicator } from 'react-native'
 
 import Auth from './routes.auth'
-import Stacks from './routes.app'
+import {Stacks} from './routes.app'
 
 
 const Routes = () => {

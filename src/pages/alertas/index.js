@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
-import { useNavigation,useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import styles from './styles'
 import api from '../../services/api'
 
@@ -13,20 +13,25 @@ export default function Alertas() {
     const [total, setTotal] = useState(0)
     const [page, setPage] = useState(1)
     const ocupacao = route.params.ocupacao
-    
+    const options = {
+        year: 'numeric', month: 'numeric', day: 'numeric',
+        hour: 'numeric', minute: 'numeric', second: 'numeric',
+        hour12: false,
+    };
+
     const navigation = useNavigation()
 
     async function loadAlerts() {
-        if(ocupacao == null){
-                    
+        if (ocupacao == null) {
+
             return Alert.alert(
                 'Aviso',
                 'Selecione sua profissão e atualize seu cadastro, ou, se você ja fez isso, reinicie o app ou retorne a página!',
                 [
 
-                    { text: 'ok', onPress: () => {}}
+                    { text: 'ok', onPress: () => { } }
                 ]
-    
+
             )
         }
 
@@ -64,7 +69,7 @@ export default function Alertas() {
                         onEndReachedThreshold={0.2}
                         renderItem={({ item: alert }) => (
                             <View style={styles.alert}>
-                               
+
                                 <Text style={styles.alertProperty}>Código:   <Text style={styles.alertValue}>
                                     {alert.id}</Text>
                                 </Text>
@@ -72,9 +77,12 @@ export default function Alertas() {
                                     {alert.titulo}</Text>
                                 </Text>
                                 <Text style={styles.alertProperty}>Valor:      <Text style={styles.alertValue}>
-                                {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
-                                </Text>                                
-                                <TouchableOpacity style={{marginTop:10}} onPress={() => irParaDetalhes(alert)}>
+                                    {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
+                                </Text>
+                                <Text style={styles.alertProperty}>Inserido em:  <Text style={styles.alertValue}>
+                                    {Intl.DateTimeFormat('pt-BR', options).format(new Date(alert.createdAt))}</Text>
+                                </Text>
+                                <TouchableOpacity style={{ marginTop: 10 }} onPress={() => irParaDetalhes(alert)}>
                                     <Text style={styles.alertProperty}>Detalhes desse Alerta</Text>
                                 </TouchableOpacity>
                             </View>

@@ -15,20 +15,16 @@ export default StyleSheet.create({
         width:300,
         borderRadius:10        
     },
-    containerButton:{
-        padding:10,    
-        borderBottomWidth:2,
 
-    },
     containerInputs:{
         padding:5
     },
     title:{
-        fontSize:15,
-        fontWeight:"bold",
         color:'#414d',
-        alignSelf:'center',        
+        fontWeight:"bold",
+        fontSize:20,
+        borderBottomWidth:2,
+        alignSelf:"center"
     }
 
 })
-

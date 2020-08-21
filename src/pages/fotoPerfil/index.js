@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import styles from './styles'
 import ImagePicker from 'react-native-image-picker'
 import api from '../../services/api'
 import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-community/async-storage'
+
 
 
 export default function FotoPerfil() {
         const [image, setImage] = useState(null)
+        const [loading, setLoading]=useState(false)
         const navigation = useNavigation()
 
         const options = {
@@ -35,7 +36,7 @@ export default function FotoPerfil() {
         }
 
         async function Upload() {
-
+            setLoading(true)
             const data = new FormData()
             data.append('file',{
                 uri: image.uri,
@@ -49,13 +50,9 @@ export default function FotoPerfil() {
                 headers:{
                     "Content-Type": `multipart/form-data; boundary=${data._boundary}`
                 }
-            })        
+            })
+            setLoading(false)    
             Alert.alert(response.data)
-                try {
-                    await AsyncStorage.setItem('@fotoPerfil',image.uri)
-                } catch (error) {
-                    
-                }
             navigation.navigate('perfil')
             } catch (error) {
                 
@@ -64,6 +61,7 @@ export default function FotoPerfil() {
         }
 
         async function updateFoto(){
+            setLoading(true)
             const data = new FormData()
             data.append('file',{
                 uri: image.uri,
@@ -76,14 +74,9 @@ export default function FotoPerfil() {
                     headers:{
                         "Content-Type": `multipart/form-data; boundary=${data._boundary}`
                     }
-                })        
+                })
+                setLoading(false)    
                 Alert.alert(response.data)
-                    try {
-                        await AsyncStorage.removeItem('@fotoPerfil')
-                        await AsyncStorage.setItem('@fotoPerfil',image.uri)
-                    } catch (error) {
-                        
-                    }
                 navigation.navigate('perfil')
                 } catch (error) {
                     
@@ -93,7 +86,10 @@ export default function FotoPerfil() {
 
         return (
             <View style={styles.container}>
-               
+                <View>
+                    <ActivityIndicator animating={loading} size="large" color="#999" />
+                </View>
+                
                 <View style={styles.containerAvatar}>
                     <TouchableOpacity onPress={() => ImagePicker.showImagePicker(options, imagePickerCallBack)}>
                         <Avatar

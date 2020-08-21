@@ -1,27 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import AsyncStorage from '@react-native-community/async-storage'
+import React, { useState, useEffect,useContext } from 'react'
 import { View, Text, FlatList, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
 import styles from './styles'
 import api from '../../services/api'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useNavigation} from '@react-navigation/native'
+import AuthContext from '../../context/auth'
 
 
 
 export default function Alertas() {
    
-    
+    const { user } = useContext(AuthContext);
     const [alertas, setAlertas] = useState([])
     const [page, setPage] = useState(1)
     const [total, setTotal] = useState(0)
     const navigation = useNavigation()
+    const options = {
+        year: 'numeric', month: 'numeric', day: 'numeric',
+        hour: 'numeric', minute: 'numeric', second: 'numeric',
+        hour12: false,
+    };
 
     
 
     async function loadAlerts() {
 
-        const userId = await AsyncStorage.getItem('@user_user_id')
-        const response = await api.post(`/alert/${userId}/allAlerts?page=${page}`)
+        const response = await api.post(`/alert/${user.id}/allAlerts?page=${page}`)
         setAlertas([...alertas, ...response.data])
         setTotal(response.headers['x-total-count'])
         setPage(page + 1)
@@ -31,7 +35,7 @@ export default function Alertas() {
     }
 
     async function deleteAlerts(alert_id) {
-        const userId = await AsyncStorage.getItem('@user_user_id')
+        
         const indice = alertas.findIndex(obj => obj.id == alert_id)
         alertas.splice(indice, 1)
         try {
@@ -47,7 +51,7 @@ export default function Alertas() {
 
 
     function feedBack(alert) {
-        navigation.navigate('feedBack', { alert })
+        navigation.navigate('feedback', { alert })
     }
 
 
@@ -66,9 +70,6 @@ export default function Alertas() {
             { cancelable: false }
         );
     }
-    function voltar(){
-        navigation.navigate('perfil')
-    }
 
     useEffect(() => {
         loadAlerts()
@@ -77,16 +78,9 @@ export default function Alertas() {
 
     return (
 
-        <View style={styles.container}>
-            <Text style={styles.title}>Bem Vindo</Text>
+        <View style={styles.container}>            
             <Text style={styles.description}>Estes são os Alertas que você cadastrou!</Text>
-            <TouchableOpacity onPress={voltar}>                
-                    <Icon
-                    name='long-arrow-left'                    
-                    color={"red"}
-                    size={30}          
-                    />
-            </TouchableOpacity>
+
             <SafeAreaView style={styles.safeArea}>
                 <View>
                     <FlatList
@@ -109,10 +103,14 @@ export default function Alertas() {
                                 <Text style={styles.alertValue}>{alert.titulo}</Text>
 
                                 <Text style={styles.alertProperty}>Descrição:</Text>
-                                <Text style={styles.description}>{alert.descricao}</Text>
+                                <Text style={styles.alertValue}>{alert.descricao}</Text>
 
                                 <Text style={styles.alertProperty}>Valor:</Text>
                                 <Text style={styles.alertValue}>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(alert.valor)}</Text>
+                                
+                                <Text style={styles.alertProperty}>Inserido em:</Text>
+                                <Text style={styles.alertValue} >{Intl.DateTimeFormat('pt-BR', options).format(new Date(alert.createdAt))}</Text>
+
                                 <View>
                                     { alert.status != 'inativo' &&  <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between", padding: 10 }}>                                 
                                     <TouchableOpacity onPress={() => navegarInscritos(alert)}>

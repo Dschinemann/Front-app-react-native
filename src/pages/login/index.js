@@ -1,16 +1,16 @@
-import React, { useState, useContext, useLayoutEffect } from 'react';
-import AsyncStorage from '@react-native-community/async-storage'
-import { View, TextInput, Button, Alert } from 'react-native';
+import React, { useState, useContext} from 'react';
+import { View, TextInput, Button, Alert, ActivityIndicator, Text} from 'react-native';
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native'
 import AuthContext from  '../../context/auth'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
 
 export default function Login() {
 
-  const {signed,signIn} = useContext(AuthContext)
+  const {signed,signIn,loadReq} = useContext(AuthContext)
 
   const navigate = useNavigation()
   const [email, setemail] = useState('')
@@ -22,20 +22,28 @@ export default function Login() {
     navigate.navigate('createUser')
   }
 
+  function validate(){
+    if(email.length <= 0){
+      return Alert.alert('E-mail não pode ser vazio')
+    }
+    if(password.length <= 0){
+      return Alert.alert('Senha não pode ser vazio')
+    }
+    signIn(email,password)
+  }
+
   return (
 
 
     <View style={styles.container}>
 
-      <View>
-        
-          <View style={styles.container}>
-
+          <ActivityIndicator animating={loadReq}/>
             <View style={styles.containerInputs}>
               <TextInput
                 style={styles.inputs}
                 onChangeText={(val) => setemail(val)}
-                placeholder={'Entre com seu email'} />
+                placeholder={'Entre com seu email'}
+                />
             </View>
 
             <View style={styles.containerInputs}>
@@ -46,24 +54,22 @@ export default function Login() {
                 placeholder={'Entre com sua senha'} />
             </View>
             <View style={styles.containerButton}>
-              <Button
-                onPress={() => signIn(email,password)}
-                title="Entrar"
-                color='#414d'
-              />
+            <TouchableOpacity onPress={validate}>
+                <Text style={styles.title}>Entrar</Text>
+              </TouchableOpacity>
             </View>
 
             <View style={styles.containerButton}>
-              <Button
-                onPress={createUser}
-                title="Cadastre-se"
-                color='#414d'
-              />
+              <TouchableOpacity onPress={createUser}>
+                <Text style={styles.title}>Cadastre-se</Text>
+              </TouchableOpacity>
             </View>
+            <View style={styles.containerButton}>
+              <TouchableOpacity onPress={() => navigate.navigate('forgot')}>
+                <Text style={styles.title}>Recupere sua Senha</Text>
+              </TouchableOpacity>
 
-          </View>
-        
-      </View>
+            </View>
 
     </View>
   );

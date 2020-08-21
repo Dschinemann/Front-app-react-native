@@ -8,18 +8,14 @@ export default StyleSheet.create({
         paddingTop:0,
         backgroundColor:"#FFFFE0"
     },   
-    title:{
-        fontSize:30,
-        marginBottom:0,
-        marginTop:10,
-        color:'#13131a',
-        fontWeight:"bold"
-    },
+
     description:{
         fontSize:16,
         lineHeight:24,
         color:'#737380',
-        paddingBottom:10
+        fontWeight:"bold",
+        paddingBottom:10,
+        marginTop:10,
 
     },
     alert:{
@@ -36,7 +32,8 @@ export default StyleSheet.create({
     alertValue:{
         marginTop:8,
         fontSize:15,       
-        color:"#737380"
+        color:"#737380",
+        fontWeight:"bold",
     },
     safeArea:{
         flex: 1,
@@ -46,5 +43,6 @@ export default StyleSheet.create({
         color:'#414d',
         fontWeight:'bold'
     },
+
 
 })

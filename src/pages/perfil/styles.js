@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 2,
         alignItems: "center",
         backgroundColor:"#FFFFE0"
 
@@ -30,7 +30,8 @@ export default StyleSheet.create({
         fontSize:30,
         fontWeight:"bold",
         color:'#414d',
-        padding:15           
+        padding:15,
+         
     },
     containerAvatar:{      
         flexDirection:"row",
@@ -44,4 +45,9 @@ export default StyleSheet.create({
         paddingLeft:10,
         fontSize:20,                  
     },
+    header:{                
+        alignSelf:'center',
+        paddingLeft:5,
+    },
+
 })

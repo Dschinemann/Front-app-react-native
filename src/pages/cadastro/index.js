@@ -1,5 +1,5 @@
-import React, { useState, Component } from 'react';
-import { Text, View, TextInput, Button, Alert, ScrollView, KeyboardAvoidingView, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TextInput, Button, Alert, ScrollView, KeyboardAvoidingView, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import CheckBox from '@react-native-community/checkbox'
 import api from '../../services/api'
@@ -17,9 +17,9 @@ export default function CreateUser() {
 
 
   const [date, setdate] = useState(new Date())
+  const [nasc, setNasc] = useState('')
   const [name, setname] = useState('')
-  const [idade, setidade] = useState("")
-  const [nasc, setnasc] = useState('')
+  const [idade, setidade] = useState('') 
   const [cep, setcep] = useState('')
   const [telefone, settelefone] = useState('')
   const [password, setpassword] = useState('')
@@ -29,13 +29,13 @@ export default function CreateUser() {
   const [possui_mei_ou_cnpj, setpossui_mei_ou_cnpj] = useState('')
 
   const [sexoM, setsexoM] = useState(false)
-  const [sexoF, setsexoF] = useState(true)
+  const [sexoF, setsexoF] = useState(false)
 
   const [anuncianteS, setanuncianteS] = useState(false)
-  const [anuncianteN, setanuncianteN] = useState(true)
+  const [anuncianteN, setanuncianteN] = useState(false)
 
   const [possui_mei_ou_cnpjS, setpossui_mei_ou_cnpjS] = useState(false)
-  const [possui_mei_ou_cnpjN, setpossui_mei_ou_cnpjN] = useState(true)
+  const [possui_mei_ou_cnpjN, setpossui_mei_ou_cnpjN] = useState(false)
 
 
 
@@ -57,15 +57,45 @@ export default function CreateUser() {
     } else {
       setsexo('FEM')
     }
-
-
   }
-  function calculaIdade() {
+
+  function calculaIdade(nasc) {
+    setNasc(nasc)
     const age = differenceInYears(date, nasc)
     setidade(age)
   }
 
   async function createUser() {
+    
+   
+    if(name.length <= 0){
+      return Alert.alert('Campo Nome não pode ser vazio!')
+    }
+    if(idade.length <= 0){
+      return Alert.alert('Campo Data Nascimento não pode ser vazio!')
+    }
+
+    if(cep.length <=0){
+      return Alert.alert('Campo Cep não pode ser vazio!')
+    }
+    if(email.length <=0){
+      return Alert.alert('Campo Email não pode ser vazio!')
+    }
+    if(telefone.length <=0){
+      return Alert.alert('Campo Telefone não pode ser vazio')
+    }
+    if(password.length <=0){
+      return Alert.alert('Campo Senha não pode ser vazio')
+    }
+    if(anunciante.length <= 0){
+      return Alert.alert('Campo Anunciante deve ser marcado!')
+    }
+    if(possui_mei_ou_cnpj.length <= 0){
+      return Alert.alert('Campo Cnpj ou Mei deve ser marcado!')
+    }
+    if(sexo.length <=0){
+      return Alert.alert('Campo Gênero deve ser marcado!')
+    }
 
     try {
 
@@ -83,16 +113,14 @@ export default function CreateUser() {
       })
 
 
-      Alert.alert('Usuario criado, faça login com o email e senha cadastrados')
-      navigation.navigate('login')
+      Alert.alert('Usuário criado, faça login com o email e senha cadastrados')
+      navigation.navigate('Login')
       return (response.data)
 
     } catch (error) {
-      Alert.alert('Verifique seu cadastro, se ja tem email cadastrado com a gente, use recuperação de senha, na pagina de login')
+      Alert.alert(`Verifique seu cadastro, \nse já tem email cadastrado com a gente, \nuse recuperação de senha, na pagina de login`)
     }
   }
-
-
 
   return (
 
@@ -108,16 +136,18 @@ export default function CreateUser() {
                 placeholder={'Nome Completo'}
                 textContentType={"username"}
                 onChangeText={(val) => setname(val)}
+                placeholderTextColor={'black'}
               />
             </View>
 
-            <Text>Selecione a data de nascimento</Text>
+            <Text style={styles.titulos}>Selecione a data de nascimento</Text>
 
             <View style={styles.containerCalendar}>
               <DatePicker
                 style={styles.dataPicker}
                 date={date}
-                onDateChange={(val) => setnasc(val)}
+                onDateChange={(val) => calculaIdade(val)}
+                format="YYYY-MM-DD"                
                 locale='pt'
                 mode={"date"}
               />
@@ -130,16 +160,16 @@ export default function CreateUser() {
             <View style={styles.checkboxContainer}>
               <CheckBox
                 value={sexoF}
-                onChange={() => sexoF ? setsexoM(true) : setsexoM(false)}
-                onValueChange={() => sexoF ? setsexoF(false) : setsexoF(true)}
+                onValueChange={(value) =>setsexoF(value)}
+                onChange={() => sexoF ? setsexoM(true):setsexoM(false) }               
                 style={styles.checkbox}
               />
               <Text style={styles.label}>Feminino</Text>
 
               <CheckBox
                 value={sexoM}
-                onChange={() => sexoM ? setsexoF(true) : setsexoF(false)}
-                onValueChange={() => sexoM ? setsexoM(false) : setsexoM(true)}
+                onValueChange={(value) =>setsexoM(value)}
+                onChange={() => sexoM? setsexoF(true):setsexoF(false) }
                 style={styles.checkbox}
               />
               <Text style={styles.label}>Masculino</Text>
@@ -149,55 +179,58 @@ export default function CreateUser() {
             <View style={styles.containerInputs}>
               <TextInput
                 style={styles.inputs}
-                textContentType={"postalCode"}
-                onBlur={calculaIdade}
+                textContentType={"postalCode"}               
                 keyboardType={'number-pad'}
                 onChangeText={(val) => setcep(val)}
-                placeholder={'CEP'} />
+                placeholder={'CEP'}
+                placeholderTextColor={'black'}
+                />                
             </View>
 
             <View style={styles.containerInputs}>
               <TextInput
-                style={styles.inputs}
+                style={styles.inputs}                
                 textContentType={"emailAddress"}
                 onChangeText={(val) => setemail(val)}
-                placeholder={'Email'} />
+                placeholder={'Email'} 
+                placeholderTextColor={'black'}
+                />
             </View>
 
-            <Text>Anunciante?</Text>
+            <Text style={styles.titulos}>Anunciante?</Text>
 
             <View style={styles.checkboxContainer}>
 
               <CheckBox
                 value={anuncianteS}
-                onChange={() => anuncianteS ? setanuncianteN(true) : setanuncianteN(false)}
-                onValueChange={() => anuncianteS ? setanuncianteS(false) : setanuncianteS(true)}
+                onValueChange={(value) =>setanuncianteS(value)}
+                onChange={() => anuncianteS ? setanuncianteN(true):setanuncianteN(false) }
                 style={styles.checkbox}
               />
               <Text style={styles.label}>Sim</Text>
               <CheckBox
                 value={anuncianteN}
-                onChange={() => anuncianteN ? setanuncianteS(true) : setanuncianteS(false)}
-                onValueChange={() => anuncianteN ? setanuncianteN(false) : setanuncianteN(true)}
+                onValueChange={(value) =>setanuncianteN(value)}
+                onChange={() => anuncianteN ? setanuncianteS(true):setanuncianteS(false) }
                 style={styles.checkbox}
               />
               <Text style={styles.label}>Não</Text>
             </View>
 
-            <Text>Possui MEI ou CNPJ ?</Text>
+            <Text style={styles.titulos}>Possui MEI ou CNPJ ?</Text>
 
             <View style={styles.checkboxContainer}>
               <CheckBox
                 value={possui_mei_ou_cnpjS}
-                onChange={() => possui_mei_ou_cnpjS ? setpossui_mei_ou_cnpjN(true) : setpossui_mei_ou_cnpjN(false)}
-                onValueChange={() => possui_mei_ou_cnpjS ? setpossui_mei_ou_cnpjS(false) : setpossui_mei_ou_cnpjS(true)}
+                onValueChange={(value) =>setpossui_mei_ou_cnpjS(value)}
+                onChange={() => possui_mei_ou_cnpjS ? setpossui_mei_ou_cnpjN(true):setpossui_mei_ou_cnpjN(false) }
                 style={styles.checkbox}
               />
               <Text style={styles.label}>Sim</Text>
               <CheckBox
                 value={possui_mei_ou_cnpjN}
-                onChange={() => possui_mei_ou_cnpjN ? setpossui_mei_ou_cnpjS(true) : setpossui_mei_ou_cnpjS(false)}
-                onValueChange={() => possui_mei_ou_cnpjN ? setpossui_mei_ou_cnpjN(false) : setpossui_mei_ou_cnpjN(true)}
+                onValueChange={(value) =>setpossui_mei_ou_cnpjN(value)}
+                onChange={() => possui_mei_ou_cnpjN ? setpossui_mei_ou_cnpjS(true):setpossui_mei_ou_cnpjS(false) }
                 style={styles.checkbox}
               />
               <Text style={styles.label}>Não</Text>
@@ -205,11 +238,11 @@ export default function CreateUser() {
 
             
             <View style={styles.containerInputs}>
-              <TextInput
-                onBlur={loadSettings}
+              <TextInput                
                 style={styles.inputs}
                 textContentType={"telephoneNumber"}
                 onChangeText={(val) => settelefone(val)}
+                onBlur={loadSettings}
                 keyboardType={"number-pad"}
                 placeholder={'Telefone'} />
             </View>
@@ -221,16 +254,14 @@ export default function CreateUser() {
                 secureTextEntry={true}
                 textContentType={"password"}
                 onChangeText={(val) => setpassword(val)}
+                onBlur={loadSettings}
                 placeholder={'PassWord'} />
             </View>
 
-            <View style={styles.containerButton}>
-              <Button
-                onPress={createUser}
-                title="Enviar"
-                color="#8B4513"
-              />
-
+            <View style={styles.create}>
+            <TouchableOpacity onPress={createUser}>
+                <Text style={styles.title}>Enviar</Text>
+              </TouchableOpacity>
             </View>
 
           </KeyboardAvoidingView>
